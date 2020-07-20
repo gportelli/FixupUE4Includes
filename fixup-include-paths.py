@@ -155,7 +155,7 @@ for file in dirs:
 	ExtractIncludePaths(src_path, "", plugin_include_paths)
 	
 	if(os.path.isdir(src_path)) :
-        FixFiles(src_path, "", plugin_include_paths, engine_include_paths, engine_plugins_include_paths)
-    else:
-        print(project_path + "/Plugins/" + file + " is not a directory or doesn't contain any /Source subfolder, skipping" +
-            " (if it's not a binary plugin folder maybe you don't need it anymore?)")
+		FixFiles(src_path, "", plugin_include_paths, engine_include_paths, engine_plugins_include_paths)
+	else:
+		print(project_path + "/Plugins/" + file + " is not a directory or doesn't contain any /Source subfolder, skipping" +
+			" (if it's not a binary plugin folder maybe you don't need it anymore?)")
