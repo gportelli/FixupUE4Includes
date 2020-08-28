@@ -3,7 +3,7 @@
 import os, sys
 import re
 
-project_path = "C:/Projects/MyAwesomeProject"
+project_path = "C:/Projects/TP_34TemplateProject/TP_34Template"
 engine_path  = "C:/Program Files/Epic Games/UE_4.24/Engine"
 
 response = input("""This script will analyze all project source files (includng plugins), searching for #include directives to fix:
@@ -151,10 +151,10 @@ for file in dirs:
 	
 	src_path = project_path + "/Plugins/" + file + "/Source"
 
-	plugin_include_paths = {}
-	ExtractIncludePaths(src_path, "", plugin_include_paths)
-	
 	if(os.path.isdir(src_path)) :
+		plugin_include_paths = {}
+		ExtractIncludePaths(src_path, "", plugin_include_paths)
+
 		FixFiles(src_path, "", plugin_include_paths, engine_include_paths, engine_plugins_include_paths)
 	else:
 		print(project_path + "/Plugins/" + file + " is not a directory or doesn't contain any /Source subfolder, skipping" +
