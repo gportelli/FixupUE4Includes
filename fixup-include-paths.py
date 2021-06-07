@@ -4,7 +4,7 @@ import os, sys
 import re
 
 project_path = "C:/Projects/MyAwesomeProject"
-engine_path  = "C:/Program Files/Epic Games/UE_4.25/Engine"
+engine_path  = "C:/Program Files/Epic Games/UE_4.26/Engine"
 
 response = input("""This script will analyze all project source files (includng plugins), searching for #include directives to fix:
  - old one-file #include paths will be replaced by long paths, as requested by the 4.24 new default build settings
