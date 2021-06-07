@@ -20,19 +20,19 @@ Start with the analysis? (y/n)""")
 
 if(response != "y") : exit(0)
 
-def ExtractIncludePaths(basepath, localpath="", computed_map={}, excluded_folders=[]):	
+def ExtractIncludePaths(basepath, localpath="", computed_map={}, excluded_folders=[]):
 	dirs = os.listdir( basepath + "/" + localpath)
 	for file in dirs:
 		currlocalpath = localpath + "/" + file
 		currpath = basepath + "/" + currlocalpath
-		
-		if(os.path.isdir(currpath)) : 
+
+		if(os.path.isdir(currpath)) :
 			if(not ("" + file) in excluded_folders) : ExtractIncludePaths(basepath, currlocalpath, computed_map, excluded_folders)
 		else:
 			(name, ext) = os.path.splitext(file)
-			
+
 			if(ext==".h"):
-				computed_map[file] = currlocalpath				
+				computed_map[file] = currlocalpath
 
 	return computed_map
 
@@ -42,7 +42,7 @@ def PrintIncludePaths(include_paths):
 
 def MinimizePath(path):
 	if(path.startswith('/')): path = path[1:] # strip first slash
-	
+
 	searches = ["Public", "Private", "Classes", "Source"]
 
 	backup = path
@@ -53,7 +53,7 @@ def MinimizePath(path):
 			tmp = path[0]
 			path.remove(tmp)
 
-			if(tmp == search): 
+			if(tmp == search):
 				found = True
 				break
 
@@ -95,7 +95,7 @@ def FixInclude(include, source_local_path, project_includes = {}, engine_include
 	if(complete_path != ""):
 		if(complete_path.find(include_path) != -1):
 			return '#include ' + include_style[0] + MinimizePath(complete_path) + include_style[1] + '\n'
-	
+
 	return include
 
 def FixFile(basepath, localpath, filename, project_includes = {}, engine_includes={}, engine_plugins_includes={}):
@@ -125,12 +125,12 @@ def FixFiles(basepath, localpath="", project_includes = {}, engine_includes={}, 
 	for file in dirs:
 		currlocalpath = localpath + "/" + file  if localpath != "" else file
 		currpath = basepath + "/" + currlocalpath
-		
-		if(os.path.isdir(currpath)) : 			
+
+		if(os.path.isdir(currpath)) :
 			FixFiles(basepath, currlocalpath, project_includes, engine_includes, engine_plugins_includes)
 		else:
 			(name, ext) = os.path.splitext(file)
-			
+
 			if((ext==".h" or ext==".cpp") and file != "RzChromaSDKTypes.h"): #avoid RzChromaSDKTypes.h cause it contains non utf8 characters
 				FixFile(basepath, currlocalpath, file, project_includes, engine_includes, engine_plugins_includes)
 
@@ -141,7 +141,7 @@ engine_include_paths = {}
 ExtractIncludePaths(engine_path + "/Source", "", engine_include_paths, ["ThirdParty", "Private"])
 
 engine_plugins_include_paths = {}
-ExtractIncludePaths(engine_path + "/Plugins", "", engine_plugins_include_paths, ["ThirdParty", "Private"]) 
+ExtractIncludePaths(engine_path + "/Plugins", "", engine_plugins_include_paths, ["ThirdParty", "Private"])
 
 FixFiles(project_path + "/Source", "", project_include_paths, engine_include_paths, engine_plugins_include_paths)
 
@@ -150,7 +150,7 @@ if not os.path.exists(project_path + "/Plugins"):
 dirs = os.listdir( project_path + "/Plugins")
 for file in dirs:
 	print(file)
-	
+
 	src_path = project_path + "/Plugins/" + file + "/Source"
 
 	if(os.path.isdir(src_path)) :
