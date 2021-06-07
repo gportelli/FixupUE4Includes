@@ -145,6 +145,8 @@ ExtractIncludePaths(engine_path + "/Plugins", "", engine_plugins_include_paths, 
 
 FixFiles(project_path + "/Source", "", project_include_paths, engine_include_paths, engine_plugins_include_paths)
 
+if not os.path.exists(project_path + "/Plugins"):
+	os.makedirs(project_path + "/Plugins")
 dirs = os.listdir( project_path + "/Plugins")
 for file in dirs:
 	print(file)
